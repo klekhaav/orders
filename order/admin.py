@@ -1,10 +1,20 @@
 from django.contrib import admin
-from import_export import resources, fields
+from import_export import resources, fields, widgets
 from import_export.admin import ImportExportMixin
+from import_export.widgets import DecimalWidget, Widget
 
 from .models import *
 
 # Register your models here.
+
+
+class FloatWidget(Widget):
+    def clean(self, value):
+        if len(str(value)) == 1:
+            value = str(value) + ".0"
+        if value != "":
+            return float(str(value).replace(',', '.'))
+        return None
 
 
 class LocalityResource(resources.ModelResource):
@@ -79,41 +89,76 @@ class RatesTableAdmin(admin.ModelAdmin):
 
 
 class RatesResource(resources.ModelResource):
-    calculational_method = fields.Field(attribute='calculational_method', column_name='CALCULATIONAL_METHOD')
-    rating_category = fields.Field(attribute='rating_category', column_name='RATING_CATEGORY')
-    cube = fields.Field(attribute='cube', column_name='CUBE')
-    carrier = fields.Field(attribute='carrier', column_name='CARRIER')
-    service = fields.Field(attribute='service', column_name='SERVICE')
-    sender_postcode = fields.Field(attribute='sender_postcode', column_name='SENDER_POSTCODE')
-    zone_from = fields.Field(attribute='zone_from', column_name='ZONE_FROM')
-    zone_from_desc = fields.Field(attribute='zone_from_desc', column_name='ZONE_FROM_DESC')
-    zone_to = fields.Field(attribute='zone_to', column_name='ZONE_TO')
-    zone_to_desc = fields.Field(attribute='zone_to_desc', column_name='ZONE_TO_DESC')
-    receiver_postcode = fields.Field(attribute='receiver_postcode', column_name='RECEIVER_POSTCODE')
-    fuel_surcharge = fields.Field(attribute='fuel_surcharge', column_name='FUEL_SURCHARGE')
-    surcharge_other_perc = fields.Field(attribute='surcharge_other_perc', column_name='SURCHARGE_OTHER_PERC')
-    surcharge_flat = fields.Field(attribute='surcharge_flat', column_name='SURCHARGE_FLAT')
-    minimum = fields.Field(attribute='minimum', column_name='MINIMUM')
-    break1_start = fields.Field(attribute='break1_start', column_name='BREAK1_START')
-    break1_end = fields.Field(attribute='break1_end', column_name='BREAK1_END')
-    basic1 = fields.Field(attribute='basic1', column_name='BASIC1')
-    kilo1 = fields.Field(attribute='kilo1', column_name='KILO1')
-    break2_start = fields.Field(attribute='break2_start', column_name='BREAK2_START')
-    break2_end = fields.Field(attribute='break2_end', column_name='BREAK2_END')
-    basic2 = fields.Field(attribute='basic2', column_name='BASIC2')
-    kilo2 = fields.Field(attribute='kilo2', column_name='KILO2')
-    break3_start = fields.Field(attribute='break3_start', column_name='BREAK3_START')
-    break3_end = fields.Field(attribute='break3_end', column_name='BREAK3_END')
-    basic3 = fields.Field(attribute='basic3', column_name='BASIC3')
-    kilo3 = fields.Field(attribute='kilo3', column_name='KILO3')
-    break4_start = fields.Field(attribute='break4_start', column_name='BREAK4_START')
-    break4_end = fields.Field(attribute='break4_end', column_name='BREAK4_END')
-    basic4 = fields.Field(attribute='basic4', column_name='BASIC4')
-    kilo4 = fields.Field(attribute='kilo4', column_name='KILO4')
-    break5_start = fields.Field(attribute='break5_start', column_name='BREAK5_START')
-    break5_end = fields.Field(attribute='break5_end', column_name='BREAK5_END')
-    basic5 = fields.Field(attribute='basic5', column_name='BASIC5')
-    kilo5 = fields.Field(attribute='kilo5', column_name='KILO5')
+    calculational_method = fields.Field(
+        attribute='calculational_method', column_name='CALCULATIONAL_METHOD')
+    rating_category = fields.Field(
+        attribute='rating_category', column_name='RATING_CATEGORY')
+    cube = fields.Field(
+        attribute='cube', column_name='CUBE')
+    carrier = fields.Field(
+        attribute='carrier', column_name='CARRIER')
+    service = fields.Field(
+        attribute='service', column_name='SERVICE')
+    sender_postcode = fields.Field(
+        attribute='sender_postcode', column_name='SENDER_POSTCODE')
+    zone_from = fields.Field(
+        attribute='zone_from', column_name='ZONE_FROM')
+    zone_from_desc = fields.Field(
+        attribute='zone_from_desc', column_name='ZONE_FROM_DESC')
+    zone_to = fields.Field(
+        attribute='zone_to', column_name='ZONE_TO')
+    zone_to_desc = fields.Field(
+        attribute='zone_to_desc', column_name='ZONE_TO_DESC')
+    receiver_postcode = fields.Field(
+        attribute='receiver_postcode', column_name='RECEIVER_POSTCODE')
+    fuel_surcharge = fields.Field(
+        attribute='fuel_surcharge', column_name='FUEL_SURCHARGE', widget=FloatWidget)
+    surcharge_other_perc = fields.Field(
+        attribute='surcharge_other_perc', column_name='SURCHARGE_OTHER_PERC', widget=FloatWidget)
+    surcharge_flat = fields.Field(
+        attribute='surcharge_flat', column_name='SURCHARGE_FLAT', widget=FloatWidget)
+    minimum = fields.Field(
+        attribute='minimum', column_name='MINIMUM', widget=FloatWidget)
+    break1_start = fields.Field(
+        attribute='break1_start', column_name='BREAK1_START', widget=FloatWidget)
+    break1_end = fields.Field(
+        attribute='break1_end', column_name='BREAK1_END', widget=FloatWidget)
+    basic1 = fields.Field(
+        attribute='basic1', column_name='BASIC1', widget=FloatWidget)
+    kilo1 = fields.Field(
+        attribute='kilo1', column_name='KILO1', widget=FloatWidget)
+    break2_start = fields.Field(
+        attribute='break2_start', column_name='BREAK2_START', widget=FloatWidget)
+    break2_end = fields.Field(
+        attribute='break2_end', column_name='BREAK2_END', widget=FloatWidget)
+    basic2 = fields.Field(
+        attribute='basic2', column_name='BASIC2', widget=FloatWidget)
+    kilo2 = fields.Field(
+        attribute='kilo2', column_name='KILO2', widget=FloatWidget)
+    break3_start = fields.Field(
+        attribute='break3_start', column_name='BREAK3_START', widget=FloatWidget)
+    break3_end = fields.Field(
+        attribute='break3_end', column_name='BREAK3_END', widget=FloatWidget)
+    basic3 = fields.Field(
+        attribute='basic3', column_name='BASIC3', widget=FloatWidget)
+    kilo3 = fields.Field(
+        attribute='kilo3', column_name='KILO3', widget=FloatWidget)
+    break4_start = fields.Field(
+        attribute='break4_start', column_name='BREAK4_START', widget=FloatWidget)
+    break4_end = fields.Field(
+        attribute='break4_end', column_name='BREAK4_END', widget=FloatWidget)
+    basic4 = fields.Field(
+        attribute='basic4', column_name='BASIC4', widget=FloatWidget)
+    kilo4 = fields.Field(
+        attribute='kilo4', column_name='KILO4', widget=FloatWidget)
+    break5_start = fields.Field(
+        attribute='break5_start', column_name='BREAK5_START', widget=FloatWidget)
+    break5_end = fields.Field(
+        attribute='break5_end', column_name='BREAK5_END', widget=FloatWidget)
+    basic5 = fields.Field(
+        attribute='basic5', column_name='BASIC5', widget=FloatWidget)
+    kilo5 = fields.Field(
+        attribute='kilo5', column_name='KILO5', widget=FloatWidget)
 
     def get_instance(self, instance_loader, row):
         return False
