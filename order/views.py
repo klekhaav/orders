@@ -15,7 +15,7 @@ class RatesTableViewSet(viewsets.ModelViewSet):
     queryset = RatesTable.objects.all()
     serializer_class = RatesTableSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = (
+    filter_fields = ('kilo1',
         'rating_id__rating_id',
         'carrier_service__title',
         'carrier_service__service',
