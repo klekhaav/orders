@@ -26,7 +26,6 @@ class RatingIdSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return RatingId.objects.create(**validated_data)
 
-
     def update(self, instance, validated_data):
         id_type = validated_data.get('id_type', instance.type)
         rating_id = validated_data.get('rating_id', instance.rating_id)
@@ -97,10 +96,10 @@ class OrderSerializer(serializers.ModelSerializer):
         sd_zone_data = validated_data.pop('sd_zone')
         rc_zone_data = validated_data.pop('rc_zone')
         carrier_service_data = validated_data.pop('carrier_service')
-        carrier_service = CarrierService.objects.get_or_create(**carrier_service_data)
-        customer_rating_id = RatingId.objects.get_or_create(**customer_rating_id_data)
-        sd_zone = Locality.objects.get_or_create(**sd_zone_data)
-        rc_zone = Locality.objects.get_or_create(**rc_zone_data)
+        carrier_service = CarrierService.objects.create(**carrier_service_data)
+        customer_rating_id = RatingId.objects.create(**customer_rating_id_data)
+        sd_zone = Locality.objects.create(**sd_zone_data)
+        rc_zone = Locality.objects.create(**rc_zone_data)
 
         order = Order.objects.create(
             customer_rating_id=customer_rating_id,
