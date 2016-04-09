@@ -1,0 +1,23 @@
+{% load staticfiles %}
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.css" %}">
+</head>
+<body ng-app="{% block ng_app %}order.static{% endblock %}">
+<div class="content" ng-controller="{% block ng_controller %}AppController{% endblock %}">{% block content %}
+{% verbatim %}
+    <div class="panel" ng-repeat="order in orders">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">{{ order.sku }}</h3>
+            <sku_decription class="pull-right">{{ order.sku_description }}</sku_decription>
+        </div>
+    </div>
+{% endverbatim %}
+{% endblock %}</div>
+<script src="{% static "js/underscore.min.js" %}"></script>
+<script src="{% static "js/angular.min.js" %}"></script>
+<script src="{% static "js/angular-resource.min.js" %}"></script>
+<script src="{% static "js/script.js" %}"></script>
+</body>
+</html>
