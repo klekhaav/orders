@@ -142,7 +142,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ),
     'PAGE_SIZE': 10,
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': (
+            'rest_framework.filters.DjangoFilterBackend',
+    )
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

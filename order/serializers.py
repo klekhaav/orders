@@ -1,5 +1,6 @@
 from .models import *
 from rest_framework import serializers
+import django_filters
 
 
 class LocalitySerializer(serializers.ModelSerializer):
