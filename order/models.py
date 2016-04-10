@@ -79,22 +79,22 @@ class RatesTable(models.Model):
     break1_end = models.FloatField(default=0.0)
     basic1 = models.FloatField(default=0.0)
     kilo1 = models.FloatField(default=0.0)
-    break2_start = models.FloatField(default=0.0)
-    break2_end = models.FloatField(default=0.0)
-    basic2 = models.FloatField(default=0.0)
-    kilo2 = models.FloatField(default=0.0)
-    break3_start = models.FloatField(default=0.0)
-    break3_end = models.FloatField(default=0.0)
-    basic3 = models.FloatField(default=0.0)
-    kilo3 = models.FloatField(default=0.0)
-    break4_start = models.FloatField(default=0.0)
-    break4_end = models.FloatField(default=0.0)
-    basic4 = models.FloatField(default=0.0)
-    kilo4 = models.FloatField(default=0.0)
-    break5_start = models.FloatField(default=0.0)
-    break5_end = models.FloatField(default=0.0)
-    basic5 = models.FloatField(default=0.0)
-    kilo5 = models.FloatField(default=0.0)
+    break2_start = models.FloatField(max_length=5, blank=True, null=True)
+    break2_end = models.FloatField(max_length=5, blank=True, null=True)
+    basic2 = models.FloatField(max_length=5, blank=True, null=True)
+    kilo2 = models.FloatField(max_length=5, blank=True, null=True)
+    break3_start = models.FloatField(max_length=5, blank=True, null=True)
+    break3_end = models.FloatField(max_length=5, blank=True, null=True)
+    basic3 = models.FloatField(max_length=5, blank=True, null=True)
+    kilo3 = models.FloatField(max_length=5, blank=True, null=True)
+    break4_start = models.FloatField(max_length=5, blank=True, null=True)
+    break4_end = models.FloatField(max_length=5, blank=True, null=True)
+    basic4 = models.FloatField(max_length=5, blank=True, null=True)
+    kilo4 = models.FloatField(max_length=5, blank=True, null=True)
+    break5_start = models.FloatField(max_length=5, blank=True, null=True)
+    break5_end = models.FloatField(max_length=5, blank=True, null=True)
+    basic5 = models.FloatField(max_length=5, blank=True, null=True)
+    kilo5 = models.FloatField(max_length=5, blank=True, null=True)
 
     def __str__(self):
         return '%s_%s_%s' % (self.calculation_method, self.rating_id, self.carrier_service)
@@ -112,30 +112,30 @@ class Rate(models.Model):
     zone_to = models.CharField(db_column='ZONE_TO', max_length=4, blank=True, null=True)
     zone_to_desc = models.CharField(db_column='ZONE_TO_DESC', max_length=20, blank=True, null=True)
     receiver_postcode = models.CharField(db_column='RECEIVER_POSTCODE', max_length=10, blank=True, null=True)
-    fuel_surcharge = models.FloatField(db_column='FUEL_SURCHARGE', blank=True, null=True)
-    surcharge_other_perc = models.FloatField(db_column='SURCHARGE_OTHER_PERC', blank=True, null=True)
-    surcharge_flat = models.FloatField(db_column='SURCHARGE_FLAT', blank=True, null=True)
-    minimum = models.FloatField(db_column='MINIMUM', blank=True, null=True)
-    break1_start = models.FloatField(db_column='BREAK1_START', blank=True, null=True)
-    break1_end = models.FloatField(db_column='BREAK1_END', blank=True, null=True)
-    basic1 = models.FloatField(db_column='BASIC1', blank=True, null=True)
-    kilo1 = models.FloatField(db_column='KILO1', blank=True, null=True)
-    break2_start = models.FloatField(db_column='BREAK2_START', blank=True, null=True)
-    break2_end = models.FloatField(db_column='BREAK2_END', blank=True, null=True)
-    basic2 = models.FloatField(db_column='BASIC2', blank=True, null=True)
-    kilo2 = models.FloatField(db_column='KILO2', blank=True, null=True)
-    break3_start = models.FloatField(db_column='BREAK3_START', blank=True, null=True)
-    break3_end = models.FloatField(db_column='BREAK3_END', blank=True, null=True)
-    basic3 = models.FloatField(db_column='BASIC3', blank=True, null=True)
-    kilo3 = models.FloatField(db_column='KILO3', blank=True, null=True)
-    break4_start = models.FloatField(db_column='BREAK4_START', blank=True, null=True)
-    break4_end = models.FloatField(db_column='BREAK4_END', blank=True, null=True)
-    basic4 = models.FloatField(db_column='BASIC4', blank=True, null=True)
-    kilo4 = models.FloatField(db_column='KILO4', blank=True, null=True)
-    break5_start = models.FloatField(db_column='BREAK5_START', blank=True, null=True)
-    break5_end = models.FloatField(db_column='BREAK5_END', blank=True, null=True)
-    basic5 = models.FloatField(db_column='BASIC5', blank=True, null=True)
-    kilo5 = models.FloatField(db_column='KILO5', blank=True, null=True)
+    fuel_surcharge = models.TextField(db_column='FUEL_SURCHARGE', blank=True, null=True)
+    surcharge_other_perc = models.TextField(db_column='SURCHARGE_OTHER_PERC', blank=True, null=True)
+    surcharge_flat = models.TextField(db_column='SURCHARGE_FLAT', blank=True, null=True)
+    minimum = models.TextField(db_column='MINIMUM', blank=True, null=True)
+    break1_start = models.TextField(db_column='BREAK1_START', blank=True, null=True)
+    break1_end = models.TextField(db_column='BREAK1_END', blank=True, null=True)
+    basic1 = models.TextField(db_column='BASIC1', blank=True, null=True)
+    kilo1 = models.TextField(db_column='KILO1', blank=True, null=True)
+    break2_start = models.TextField(db_column='BREAK2_START', blank=True, null=True)
+    break2_end = models.TextField(db_column='BREAK2_END', blank=True, null=True)
+    basic2 = models.TextField(db_column='BASIC2', blank=True, null=True)
+    kilo2 = models.TextField(db_column='KILO2', blank=True, null=True)
+    break3_start = models.TextField(db_column='BREAK3_START', blank=True, null=True)
+    break3_end = models.TextField(db_column='BREAK3_END', blank=True, null=True)
+    basic3 = models.TextField(db_column='BASIC3', blank=True, null=True)
+    kilo3 = models.TextField(db_column='KILO3', blank=True, null=True)
+    break4_start = models.TextField(db_column='BREAK4_START', blank=True, null=True)
+    break4_end = models.TextField(db_column='BREAK4_END', blank=True, null=True)
+    basic4 = models.TextField(db_column='BASIC4', blank=True, null=True)
+    kilo4 = models.TextField(db_column='KILO4', blank=True, null=True)
+    break5_start = models.TextField(db_column='BREAK5_START', blank=True, null=True)
+    break5_end = models.TextField(db_column='BREAK5_END', blank=True, null=True)
+    basic5 = models.TextField(db_column='BASIC5', blank=True, null=True)
+    kilo5 = models.TextField(db_column='KILO5', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         super(Rate, self).save(*args, **kwargs)
@@ -168,30 +168,30 @@ class Rate(models.Model):
             rating_id=rid_obj,
             carrier_service=cs_obj,
             calculation_method=self.calculational_method,
-            fuel_surcharge=self.fuel_surcharge,
-            surcharge_other_perc=self.surcharge_other_perc,
-            surcharge_flat=self.surcharge_flat,
-            minimum=self.minimum,
-            break1_start=self.break1_start,
-            break1_end=self.break1_end,
-            basic1=self.basic1,
-            kilo1=self.kilo1,
-            break2_start=self.break2_start,
-            break2_end=self.break2_end,
-            basic2=self.basic2,
-            kilo2=self.kilo2,
-            break3_start=self.break3_start,
-            break3_end=self.break3_end,
-            basic3=self.basic3,
-            kilo3=self.kilo3,
-            break4_start=self.break4_start,
-            break4_end=self.break4_end,
-            basic4=self.basic4,
-            kilo4=self.kilo4,
-            break5_start=self.break5_start,
-            break5_end=self.break5_end,
-            basic5=self.basic5,
-            kilo5=self.kilo5,
+            fuel_surcharge=clean(self.fuel_surcharge),
+            surcharge_other_perc=clean(self.surcharge_other_perc),
+            surcharge_flat=clean(self.surcharge_flat),
+            minimum=clean(self.minimum),
+            break1_start=clean(self.break1_start),
+            break1_end=clean(self.break1_end),
+            basic1=clean(self.basic1),
+            kilo1=clean(self.kilo1),
+            break2_start=clean(self.break2_start),
+            break2_end=clean(self.break2_end),
+            basic2=clean(self.basic2),
+            kilo2=clean(self.kilo2),
+            break3_start=clean(self.break3_start),
+            break3_end=clean(self.break3_end),
+            basic3=clean(self.basic3),
+            kilo3=clean(self.kilo3),
+            break4_start=clean(self.break4_start),
+            break4_end=clean(self.break4_end),
+            basic4=clean(self.basic4),
+            kilo4=clean(self.kilo4),
+            break5_start=clean(self.break5_start),
+            break5_end=clean(self.break5_end),
+            basic5=clean(self.basic5),
+            kilo5=clean(self.kilo5),
         )
         return
 
@@ -253,3 +253,8 @@ class Order(models.Model):
     def __str__(self):
         return self.sku
 
+
+def clean(value):
+    if value and value != "":
+        return float(str(value).replace(',', '.'))
+    return None
