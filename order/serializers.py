@@ -38,7 +38,7 @@ class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rate
         fields = (
-            'calculational_method', 'rating_id', 'cube', 'carrier', 'service', 'sender_postcode', 'zone_from',
+            'calculational_method', 'rating_category', 'cube', 'carrier', 'service', 'sender_postcode', 'zone_from',
             'zone_from_desc', 'zone_to', 'zone_to_desc', 'receiver_postcode', 'fuel_surcharge', 'surcharge_other_perc',
             'surcharge_flat', 'minimum', 'break1_start', 'break1_end', 'basic1', 'kilo1', 'break2_start', 'break2_end',
             'basic2', 'kilo2', 'break3_start', 'break3_end', 'basic3', 'kilo3', 'break4_start', 'break4_end', 'basic4',
