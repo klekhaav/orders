@@ -171,9 +171,9 @@ class OrderAdmin(admin.ModelAdmin):
         ('Customer Info',    {'fields':  ['customer_rating_id', 'get_rate_type']}),
         ('Status',           {'fields':  ['carrier_service', 'price', 'status',]}),
         ('Parameters',       {'fields':  ['length', 'width', 'height', 'weight']}),
-        ('Sender Details',   {'fields':  ['sd_unit_apartment', 'sd_street_number', 'sd_street_name',
+        ('Sender Details',   {'fields':  ['sd_addr0', 'sd_addr1', 'sd_addr2', 'sd_addr3',
                                          'sd_zone', 'sd_residence_type']}),
-        ('Receiver Details', {'fields':  ['rc_unit_apartment', 'rc_street_number','rc_street_name',
+        ('Receiver Details', {'fields':  ['rc_addr0', 'rc_addr1', 'rc_addr2', 'rc_addr3',
                                           'rc_zone', 'rc_residence_type']}),
     ]
     list_display = ('sku', 'get_cubic_weight', 'customer_rating_id', 'get_order_status',

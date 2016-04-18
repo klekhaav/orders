@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 BUSINESS = 'B'
 PERSONAL = 'P'
@@ -29,8 +30,8 @@ class Locality(models.Model):
     country = models.CharField(max_length=20, blank=True, null=True)
     state = models.CharField(max_length=20, blank=True, null=True)
     title = models.CharField(max_length=20)
-    postcode = models.CharField(max_length=10, blank=True, null=True)
-    zone = models.CharField(max_length=4, blank=True, null=True)
+    postcode = models.CharField(max_length=10)
+    zone = models.CharField(max_length=4)
 
     def __str__(self):
         return '%s_"%s"_"%s"' % (self.zone, self.title, self.postcode)
@@ -139,10 +140,15 @@ class Rate(models.Model):
 
     def save(self, *args, **kwargs):
         super(Rate, self).save(*args, **kwargs)
-        loc = Locality.objects.update_or_create(
+        loc1 = Locality.objects.update_or_create(
             title=self.zone_from_desc,
             postcode=self.sender_postcode,
             zone=self.zone_from,
+        )
+        loc2 = Locality.objects.update_or_create(
+            title=self.zone_to_desc,
+            postcode=self.receiver_postcode,
+            zone=self.zone_to,
         )
         cs = CarrierService.objects.update_or_create(
             title=self.carrier,
@@ -209,17 +215,19 @@ class Order(models.Model):
     status = models.CharField(max_length=10)
 
     # Customer Input - Sender Details
-    sd_unit_apartment = models.CharField(max_length=30)
-    sd_street_number = models.CharField(max_length=30)
-    sd_street_name = models.CharField(max_length=30)
+    sd_addr0 = models.CharField(max_length=30)
+    sd_addr1 = models.CharField(max_length=30)
+    sd_addr2 = models.CharField(max_length=30)
+    sd_addr3 = models.CharField(max_length=30)
     sd_zone = models.ForeignKey(Locality, related_name='zone_from')
 
     sd_residence_type = models.CharField(max_length=1, choices=residence_type_choices, default=BUSINESS)
 
     # Customer Input - Receiver Details
-    rc_unit_apartment = models.CharField(max_length=30)
-    rc_street_number = models.CharField(max_length=30)
-    rc_street_name = models.CharField(max_length=30)
+    rc_addr0 = models.CharField(max_length=30)
+    rc_addr1 = models.CharField(max_length=30)
+    rc_addr2 = models.CharField(max_length=30)
+    rc_addr3 = models.CharField(max_length=30)
     rc_zone = models.ForeignKey(Locality, related_name='zone_to')
 
     rc_residence_type = models.CharField(max_length=1, choices=residence_type_choices, default=BUSINESS)

@@ -73,12 +73,14 @@ class OrderSerializer(serializers.ModelSerializer):
     height = serializers.FloatField()
     weight = serializers.FloatField()
     status = serializers.CharField(max_length=10)
-    sd_unit_apartment = serializers.CharField()
-    sd_street_number = serializers.CharField()
-    sd_street_name = serializers.CharField(max_length=30)
-    rc_unit_apartment = serializers.CharField()
-    rc_street_number = serializers.CharField()
-    rc_street_name = serializers.CharField(max_length=30)
+    sd_addr0 = serializers.CharField(max_length=30)
+    sd_addr1 = serializers.CharField(max_length=30)
+    sd_addr2 = serializers.CharField(max_length=30)
+    sd_addr3 = serializers.CharField(max_length=30)
+    rc_addr0 = serializers.CharField(max_length=30)
+    rc_addr1 = serializers.CharField(max_length=30)
+    rc_addr2 = serializers.CharField(max_length=30)
+    rc_addr3 = serializers.CharField(max_length=30)
     carrier_service = CarrierServiceSerializer(many=False)
     price = serializers.FloatField()
 
@@ -86,23 +88,37 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = (
             'customer_rating_id', 'sku', 'sku_description', 'length', 'width', 'height', 'weight', 'status',
-            'sd_unit_apartment', 'sd_street_number', 'sd_street_name', 'sd_zone', 'sd_residence_type',
-            'rc_unit_apartment', 'rc_street_number', 'rc_street_name', 'rc_zone', 'rc_residence_type', 'shipping_type',
+            'sd_addr0', 'sd_addr1', 'sd_addr2', 'sd_addr3', 'sd_zone', 'sd_residence_type',
+            'rc_addr0', 'rc_addr1', 'rc_addr2', 'rc_addr3', 'rc_zone', 'rc_residence_type', 'shipping_type',
             'carrier_service', 'price'
         )
 
     def create(self, validated_data):
 
+        sku=validated_data.get('sku')
         customer_rating_id_data = validated_data.pop('customer_rating_id')
         sd_zone_data = validated_data.pop('sd_zone')
         rc_zone_data = validated_data.pop('rc_zone')
         carrier_service_data = validated_data.pop('carrier_service')
-        carrier_service = CarrierService.objects.create(**carrier_service_data)
-        customer_rating_id = RatingId.objects.create(**customer_rating_id_data)
-        sd_zone = Locality.objects.create(**sd_zone_data)
-        rc_zone = Locality.objects.create(**rc_zone_data)
+        if CarrierService.objects.get(**carrier_service_data):
+            carrier_service = CarrierService.objects.get(**carrier_service_data)
+        else:
+            carrier_service = CarrierService.objects.create(**carrier_service_data)
+        if RatingId.objects.get(**customer_rating_id_data):
+            customer_rating_id = RatingId.objects.get(**customer_rating_id_data)
+        else:
+            customer_rating_id = RatingId.objects.create(**customer_rating_id_data)
+        if Locality.objects.get(**sd_zone_data):
+            sd_zone = Locality.objects.get(**sd_zone_data)
+        else:
+            sd_zone = Locality.objects.create(**sd_zone_data)
+        if Locality.objects.get(**rc_zone_data):
+            rc_zone = Locality.objects.get(**rc_zone_data)
+        else:
+            rc_zone = Locality.objects.create(**rc_zone_data)
 
         order = Order.objects.create(
+            sku='sku',
             customer_rating_id=customer_rating_id,
             sd_zone=sd_zone,
             rc_zone=rc_zone,
@@ -124,12 +140,14 @@ class OrderSerializer(serializers.ModelSerializer):
         height = validated_data.get('height', instance.height)
         weight = validated_data.get('weight', instance.weight)
         status = validated_data.get('status', instance.status)
-        sd_unit_apartment = validated_data.get('sd_unit_apartment', instance.sd_unit_apartment)
-        sd_street_number = validated_data.get('sd_street_number', instance.sd_street_number)
-        sd_street_name = validated_data.get('sd_street_name', instance.sd_street_name)
-        rc_unit_apartment = validated_data.get('rc_unit_apartment', instance.rc_unit_apartment)
-        rc_street_number = validated_data.get('rc_street_number', instance.rc_street_number)
-        rc_street_name = validated_data.get('rc_street_name', instance.rc_street_name)
+        sd_addr0 = validated_data.get('sd_addr0', instance.sd_addr0)
+        sd_addr1 = validated_data.get('sd_addr1', instance.sd_addr1)
+        sd_addr2 = validated_data.get('sd_addr2', instance.sd_addr2)
+        sd_addr3 = validated_data.get('sd_addr3', instance.sd_addr3)
+        rc_addr0 = validated_data.get('rc_addr0', instance.rc_addr0)
+        rc_addr1 = validated_data.get('rc_addr1', instance.rc_addr1)
+        rc_addr2 = validated_data.get('rc_addr2', instance.rc_addr2)
+        rc_addr3 = validated_data.get('rc_addr3', instance.rc_addr3)
         carrier_service = validated_data.get('rc_street_name', instance.carrier_service)
         price = validated_data.get('rc_street_name', instance.price)
         instance.save()

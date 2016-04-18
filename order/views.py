@@ -31,6 +31,11 @@ class RatesTableViewSet(viewsets.ModelViewSet):
 class LocalityViewSet(viewsets.ModelViewSet):
     queryset = Locality.objects.all()
     serializer_class = LocalitySerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('title', 'state', 'country', 'postcode', 'zone')
+    permission_classes = [
+        permissions.AllowAny
+    ]
 
 
 class CarrierServiceViewSet(viewsets.ModelViewSet):
