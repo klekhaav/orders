@@ -170,6 +170,7 @@ class OrderAdmin(admin.ModelAdmin):
         ('Order',            {'fields':  ['sku', 'sku_description', 'shipping_type']}),
         ('Customer Info',    {'fields':  ['customer_rating_id', 'get_rate_type']}),
         ('Status',           {'fields':  ['carrier_service', 'price', 'status',]}),
+        ('PDF',              {'fields':  ['manifest',]}),
         ('Parameters',       {'fields':  ['length', 'width', 'height', 'weight']}),
         ('Sender Details',   {'fields':  ['sd_addr0', 'sd_addr1', 'sd_addr2', 'sd_addr3',
                                          'sd_zone', 'sd_residence_type']}),
@@ -180,7 +181,7 @@ class OrderAdmin(admin.ModelAdmin):
                     'sd_zone', 'rc_zone', 'get_rate_type')
     search_fields = ('sku', 'customer_rating_id', 'sd_zone', 'rc_zone')
     list_filter = ['customer_rating_id', 'sd_zone', 'rc_zone']
-    readonly_fields = ('get_cubic_weight', 'get_order_status', 'get_rate_type')
+    readonly_fields = ('get_cubic_weight', 'get_order_status', 'get_rate_type', 'manifest',)
 
 
 admin.site.register(Locality, LocalityAdmin)

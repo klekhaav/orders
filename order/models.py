@@ -237,6 +237,7 @@ class Order(models.Model):
     carrier_service = models.ForeignKey(CarrierService)
 
     price = models.FloatField()
+    manifest = models.TextField()
 
     def get_rate_type(self):
         return '%s2%s' % (self.sd_residence_type, self.rc_residence_type)

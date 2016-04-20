@@ -66,8 +66,8 @@ class OrderSerializer(serializers.ModelSerializer):
     rc_zone = LocalitySerializer(many=False)
     sd_residence_type = serializers.ChoiceField(residence_type_choices)
     rc_residence_type = serializers.ChoiceField(residence_type_choices)
-    sku = serializers.CharField(required=True, max_length=100)
-    sku_description = serializers.CharField(max_length=30)
+    sku = serializers.CharField(max_length=30)
+    sku_description = serializers.CharField(max_length=100)
     length = serializers.FloatField()
     width = serializers.FloatField()
     height = serializers.FloatField()
@@ -90,39 +90,25 @@ class OrderSerializer(serializers.ModelSerializer):
             'customer_rating_id', 'sku', 'sku_description', 'length', 'width', 'height', 'weight', 'status',
             'sd_addr0', 'sd_addr1', 'sd_addr2', 'sd_addr3', 'sd_zone', 'sd_residence_type',
             'rc_addr0', 'rc_addr1', 'rc_addr2', 'rc_addr3', 'rc_zone', 'rc_residence_type', 'shipping_type',
-            'carrier_service', 'price'
+            'carrier_service', 'price', 'manifest'
         )
 
     def create(self, validated_data):
 
-        sku=validated_data.get('sku')
         customer_rating_id_data = validated_data.pop('customer_rating_id')
         sd_zone_data = validated_data.pop('sd_zone')
         rc_zone_data = validated_data.pop('rc_zone')
         carrier_service_data = validated_data.pop('carrier_service')
-        if CarrierService.objects.get(**carrier_service_data):
-            carrier_service = CarrierService.objects.get(**carrier_service_data)
-        else:
-            carrier_service = CarrierService.objects.create(**carrier_service_data)
-        if RatingId.objects.get(**customer_rating_id_data):
-            customer_rating_id = RatingId.objects.get(**customer_rating_id_data)
-        else:
-            customer_rating_id = RatingId.objects.create(**customer_rating_id_data)
-        if Locality.objects.get(**sd_zone_data):
-            sd_zone = Locality.objects.get(**sd_zone_data)
-        else:
-            sd_zone = Locality.objects.create(**sd_zone_data)
-        if Locality.objects.get(**rc_zone_data):
-            rc_zone = Locality.objects.get(**rc_zone_data)
-        else:
-            rc_zone = Locality.objects.create(**rc_zone_data)
+        cs = CarrierService.objects.create(**carrier_service_data)
+        cri = RatingId.objects.create(**customer_rating_id_data)
+        sd_zone = Locality.objects.create(**sd_zone_data)
+        rc_zone = Locality.objects.create(**rc_zone_data)
 
         order = Order.objects.create(
-            sku='sku',
-            customer_rating_id=customer_rating_id,
+            customer_rating_id=cri,
             sd_zone=sd_zone,
             rc_zone=rc_zone,
-            carrier_service=carrier_service,
+            carrier_service=cs,
             **validated_data
         )
         return order
