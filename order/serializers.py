@@ -104,6 +104,8 @@ class OrderSerializer(serializers.ModelSerializer):
         sd_zone = Locality.objects.create(**sd_zone_data)
         rc_zone = Locality.objects.create(**rc_zone_data)
 
+        print(sd_zone_data)
+
         order = Order.objects.create(
             customer_rating_id=cri,
             sd_zone=sd_zone,
