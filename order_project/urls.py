@@ -20,4 +20,5 @@ urlpatterns = patterns(
     '',
     url(r'^admin/', admin.site.urls),
     url(r'^shipping/', include('order.urls', namespace='shipping')),
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
 )

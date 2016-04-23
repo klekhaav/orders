@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'import_export',
     'corsheaders',
+    'oauth2_provider',
+    'social.apps.django_app.default',
+    'rest_framework_social_oauth2',
 
     'order',
 ]
@@ -70,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -141,6 +146,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
         'rest_framework.permissions.AllowAny',
     ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.ext.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    ),
     'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKENDS': (
             'rest_framework.filters.DjangoFilterBackend',
@@ -157,3 +166,8 @@ CORS_ALLOW_METHODS = (
         'DELETE',
         'OPTIONS'
     )
+
+AUTHENTICATION_BACKENDS = (
+   'rest_framework_social_oauth2.backends.DjangoOAuth2',
+   'django.contrib.auth.backends.ModelBackend',
+)
