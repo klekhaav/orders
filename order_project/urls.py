@@ -21,4 +21,6 @@ urlpatterns = patterns(
     url(r'^admin/', admin.site.urls),
     url(r'^shipping/', include('order.urls', namespace='shipping')),
     url(r'^auth/', include('rest_framework_social_oauth2.urls')),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url('^accounts/', include('django.contrib.auth.urls')),
 )
