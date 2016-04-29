@@ -1,27 +1,43 @@
-from rest_framework import permissions, filters, viewsets
-from rest_framework.authentication import TokenAuthentication
-from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
+from rest_framework import permissions, filters, viewsets, generics
+# from rest_framework.authentication import TokenAuthentication
+# from oauth2_provider.ext.rest_framework import TokenHasReadWriteScope, TokenHasScope
+# from .permissions import IsAuthenticatedOrCreate
 from .serializers import *
 from .forms import *
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+    # permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated, TokenHasScope]
-    required_scopes = ['groups']
+    # permission_classes = [permissions.IsAuthenticated, TokenHasScope]
+    # required_scopes = ['groups']
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+
+# class SignUp(generics.CreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = SignUpSerializer
+#     permission_classes = (IsAuthenticatedOrCreate,)
 
 
 class RateViewSet(viewsets.ModelViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, TokenHasReadWriteScope]
+    permission_classes = [
+        permissions.AllowAny
+    ]
 
 
 class RatesTableViewSet(viewsets.ModelViewSet):

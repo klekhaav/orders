@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from oauth2_provider.admin import Application
+from django.core.exceptions import ObjectDoesNotExist
 
 import django_filters
 
@@ -14,6 +16,27 @@ class UserSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
+
+
+class SignUpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password')
+        write_only_fields = ('password',)
+
+    def create(self, validated_data):
+        username = validated_data.pop('username')
+        password = validated_data.pop('password')
+        # user = User.objects.get(username=username)
+        try:
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            user = User.objects.create(username=username, password=password)
+
+        Application.objects.create(user=user,
+                                   client_type=Application.CLIENT_CONFIDENTIAL,
+                                   authorization_grant_type=Application.GRANT_PASSWORD)
+        return user
 
 
 class LocalitySerializer(serializers.ModelSerializer):
