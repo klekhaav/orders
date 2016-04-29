@@ -1,13 +1,19 @@
 from rest_framework import permissions, filters, viewsets
 from .serializers import *
 from .forms import *
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
+
+
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
 
 
 class RateViewSet(viewsets.ModelViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
     permission_classes = [
-        permissions.AllowAny
+        permissions.IsAuthenticated
     ]
 
 

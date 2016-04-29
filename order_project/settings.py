@@ -37,8 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
     'import_export',
     'corsheaders',
 
@@ -121,6 +129,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ID = 1
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -140,12 +150,18 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAdminUser',
         'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated'
     ),
     'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKENDS': (
             'rest_framework.filters.DjangoFilterBackend',
     )
 }
+
+# REST_AUTH_SERIALIZERS = {
+#     'LOGIN_SERIALIZER': 'path.to.custom.LoginSerializer',
+#     'TOKEN_SERIALIZER': 'path.to.custom.TokenSerializer',
+# }
 
 CORS_ORIGIN_ALLOW_ALL = True
 
